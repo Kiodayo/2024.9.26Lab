@@ -1,0 +1,38 @@
+QT       += core gui mqtt
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+CONFIG += c++11
+
+# You can make your code fail to compile if it uses deprecated APIs.
+# In order to do so, uncomment the following line.
+#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+
+SOURCES += \
+    main.cpp \
+    borde.cpp
+
+HEADERS += \
+    borde.h \
+    fsmp_board/fsmpBeeper.h \
+    fsmp_board/fsmpCamera.h \
+    fsmp_board/fsmpElectric.h \
+    fsmp_board/fsmpEvents.h \
+    fsmp_board/fsmpFan.h \
+    fsmp_board/fsmpLed.h \
+    fsmp_board/fsmpLight.h \
+    fsmp_board/fsmpProximity.h \
+    fsmp_board/fsmpSevensegLed.h \
+    fsmp_board/fsmpTempHum.h \
+    fsmp_board/fsmpVibrator.h
+
+FORMS += \
+    borde.ui
+
+# Default rules for deployment.
+qnx: target.path = /tmp/$${TARGET}/bin
+else: unix:!android: target.path = /opt/$${TARGET}/bin
+!isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    fsmp_board/Makefile
