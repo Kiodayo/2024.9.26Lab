@@ -8,6 +8,12 @@ borde::borde(QWidget *parent)
 {
     ui->setupUi(this);
 
+    ui->label->hide();
+    ui->label_2->hide();
+    ui->pushButton_5->hide();
+
+    secondPage = new SecondPage;
+
     leds = new fsmpLeds;
     fan = new fsmpFan;
     vibrator = new fsmpVibrator;
@@ -47,7 +53,7 @@ void borde::connect_success(){
     qDebug()<<"connect success";
 
     //硬件订阅 （发布号）
-    client->subscribe(QMqttTopicFilter("1727168812506/AIOTSIM2Device"));
+    client->subscribe(QMqttTopicFilter("1727406674509/AIOTSIM2Device"));
 }
 
 void borde::recv_data_from_mqtt_server(QByteArray message,QMqttTopicName topic_name){
@@ -74,9 +80,23 @@ void borde::timer_timeout(){
     double tem = temp_hum->temperature();
     double hum = temp_hum->humidity();
 
+
     ui->label->setText(QString("温度:%1").arg(tem));
     ui->label_2->setText(QString("湿度:%1").arg(hum));
 }
+
+void borde::to_server(double i){
+    if(i == 1){
+    QString message = "{\"doorLock\":true,\"id\":0}";
+    //发布--mqtt服务器发送开门信息
+    client->publish(QMqttTopicName("1727406680831/APP2AIOTSIM"),message.toLatin1());
+    }else{
+        QString message = "{\"doorLock\":false,\"id\":0}";
+        //发布--mqtt服务器发送开门信息
+        client->publish(QMqttTopicName("1727406680831/APP2AIOTSIM"),message.toLatin1());
+    }
+}
+
 
 
 void borde::on_pushButton_clicked()
@@ -145,5 +165,26 @@ void borde::on_pushButton_5_clicked()
 {
   timer->start(1000);
 
+}
+
+
+void borde::on_pushButton_6_clicked()
+{
+    secondPage->show();
+}
+
+
+void borde::on_pushButton_7_clicked()
+{
+    static int flag = 0;
+    if(flag == 0){
+        to_server(1);
+        flag = 1;
+        ui->pushButton_7->setText("门锁关闭");
+    }else{
+        to_server(0);
+        flag = 0;
+        ui->pushButton_7->setText("门锁开启");
+    }
 }
 

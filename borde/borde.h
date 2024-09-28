@@ -9,6 +9,7 @@
 #include<fsmp_board/fsmpBeeper.h>
 #include<fsmp_board/fsmpTempHum.h>
 
+//MQTT Class
 #include"qmqttclient.h"
 
 //json
@@ -19,6 +20,8 @@
 
 //定时器
 #include<QTimer>
+
+#include"secondpage.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class borde; }
@@ -31,6 +34,8 @@ class borde : public QWidget
 public:
     borde(QWidget *parent = nullptr);
     ~borde();
+    QMqttClient * client;
+
 
 private slots:
     void on_pushButton_clicked();
@@ -47,6 +52,12 @@ private slots:
 
     void recv_data_from_mqtt_server(QByteArray message,QMqttTopicName topic_name);
 
+    void on_pushButton_6_clicked();
+
+    void to_server(double i);
+
+    void on_pushButton_7_clicked();
+
 private:
     Ui::borde *ui;
 
@@ -57,8 +68,10 @@ private:
     fsmpTempHum * temp_hum;
     QTimer * timer;
 
+    QWidget* secondPage;
 
-   QMqttClient * client;
+
+
 
 };
 #endif // BORDE_H

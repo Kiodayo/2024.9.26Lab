@@ -10,7 +10,8 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
-    borde.cpp
+    borde.cpp \
+    secondpage.cpp
 
 HEADERS += \
     borde.h \
@@ -24,10 +25,12 @@ HEADERS += \
     fsmp_board/fsmpProximity.h \
     fsmp_board/fsmpSevensegLed.h \
     fsmp_board/fsmpTempHum.h \
-    fsmp_board/fsmpVibrator.h
+    fsmp_board/fsmpVibrator.h \
+    secondpage.h
 
 FORMS += \
-    borde.ui
+    borde.ui \
+    secondpage.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
